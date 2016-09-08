@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+<property>
+  <name>fs.alluxio.impl</name>
+  <value>alluxio.hadoop.FileSystem</value>
+ </property>
+<property>
+  <name>fs.AbstractFileSystem.alluxio.impl</name>
+  <value>alluxio.hadoop.AlluxioFileSystem</value>
+  <description>The Alluxio AbstractFileSystem (Hadoop 2.x)</description>
+</property>
+ <property>
+  <name>hbase.rootdir</name>
+  <value>alluxio://sr164:19998/hbase</value>
+ </property>
+ <property>
+  <name>hbase.zookeeper.property.clientPort</name>
+  <value>2181</value>
+ </property>
+ <property>
+  <name>zookeeper.session.timeout</name>
+  <value>300000</value>
+ </property>
+ <property>
+  <name>hbase.zookeeper.quorum</name>
+  <value>sr164,sr236,sr119,sr165</value>
+ </property>
+ <property>
+  <name>hbase.master</name>
+  <value>sr164</value>
+ </property>
+ <property>
+  <name>hbase.tmp.dir</name>
+  <value>/tmp</value>
+ </property>
+ <property>
+  <name>hbase.cluster.distributed</name>
+  <value>true</value>
+  </property>
+<!--下面的设置都是在集成测试时使用的，前面两个测试不需要，主要是因为集群规模太小进行的妥协-->
+ <property>
+  <name>hbase.client.scanner.caching</name>
+  <value>1024</value>
+ </property>
+ <property>
+  <name>hbase.client.scanner.timeout.period</name>
+  <value>600000</value>
+ </property>
+<property>
+    <name>hbase.rpc.timeout</name>
+    <value>600000</value>
+ </property>
+<property>
+   <name>hbase.client.ipc.pool.type</name>
+   <value>RoundRobinPool</value>
+</property>
+<property>
+   <name>hbase.client.ipc.pool.size</name>
+   <value>10</value>
+</property>
+<property><!--只用hdfs的checksum，不用HBase的,可以不设置-->
+ <name>hbase.regionserver.checksum.verify</name>
+ <value>false</value>
+</property>
+<property><!--因为这个默认是0，设为0.5可以保持put和scan队列的比例相等，可以不设置-->
+ <name>hbase.ipc.server.callqueue.scan.ratio</name>
+ <value>0.5</value>
+</property>
+<property> <!--可以加快scan， 可以不设置-->
+<name>hbase.storescanner.parallel.seek.enable</name>
+<value>true</value>
+</property>
+ <!--集成测试时使用,前一个coprocessor是为了支持Cell Visibility，后一个是为了支持ACL-->
+<property>
+ <name>hbase.coprocessor.region.classes</name>
+ <value>org.apache.hadoop.hbase.security.visibility.VisibilityController,org.apache.hadoop.hbase.security.access.AccessController</value>
+</property>
+<property>
+ <name>hbase.coprocessor.master.classes</name>
+ <value>org.apache.hadoop.hbase.security.visibility.VisibilityController,org.apache.hadoop.hbase.security.access.AccessController</value>
+</property>
+<property>
+ <name>hbase.security.access.early_out</name>
+ <value>false</value>
+</property>
+</configuration>

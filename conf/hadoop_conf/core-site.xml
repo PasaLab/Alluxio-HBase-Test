@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+     <property>
+      <name>fs.default.name</name>
+      <value>hdfs://sr164:9000/</value>
+     </property>
+     <property>
+      <name>hadoop.tmp.dir</name>
+      <value>/tmp</value>
+     </property>
+    <property>
+      <name>fs.alluxio.impl</name>
+      <value>alluxio.hadoop.FileSystem</value>
+      <description>The Alluxio FileSystem (Hadoop 1.x and 2.x)</description>
+    </property>
+    <property>
+        <name>fs.AbstractFileSystem.alluxio.impl</name>
+        <value>alluxio.hadoop.AlluxioFileSystem</value>
+        <description>The Alluxio AbstractFileSystem (Hadoop 2.x)</description>
+    </property>
+</configuration>

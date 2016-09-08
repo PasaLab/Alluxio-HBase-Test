@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+ <property>
+  <name>mapreduce.framework.name</name>
+  <value>yarn</value>
+ </property>
+ <property><!--设置map和reduce task所占内存的大小，默认为1024M-->
+  <name>mapreduce.map.memory.mb</name>
+  <value>4096</value>
+ </property>
+ <property>
+  <name>mapreduce.reduce.memory.mb</name>
+  <value>4096</value>
+ </property>
+ <property><!--设置task jvm的堆大小-->
+  <name>mapred.child.java.opts</name>
+  <value>-Xmx1024m</value>
+ </property>
+<property><!--设置task中间结果的目录, 默认为/tmp-->
+  <name>yarn.app.mapreduce.am.staging-dir</name>
+  <value>/user</value>
+</property>
+</configuration>
