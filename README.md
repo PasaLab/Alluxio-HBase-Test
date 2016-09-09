@@ -20,6 +20,7 @@ This is a repo for HBase on Alluxio Integration Test
 ###### 2.第二部分为Hadoop Utility测试, 测试命令在bin/hadoop_utility_test.sh中,
   
   **需要export ${HBASE_HOME}或者将${HBASE_HOME}替换为实际的HBase根目录**
+  
   **需要准备tsv或csv文件作为输入并把脚本中所有文件路径替换为实际的路径**
   
 ###### 3.第三部分为HBase的Integration Test, 测试命令在bin/integration_test.sh中,
@@ -54,7 +55,7 @@ This is a repo for HBase on Alluxio Integration Test
    <value>org.apache.hadoop.hbase.security.visibility.VisibilityController</value>
   </property>
   ```
-  可以同时配置，以逗号分隔，具体见[conf/hbase_conf/hbase-site.xml](./conf/hbase_conf/hbse-site.xml)
+  可以同时配置，以逗号分隔，具体见[conf/hbase_conf/hbase-site.xml](./conf/hbase_conf/hbase-site.xml)
   
   如果有Integration Test的测试出现异常(HBase未报错，Alluxio的日志中有hbase checksum failed),可以在hbase-site.xml中添加如下配置:
   ```xml
