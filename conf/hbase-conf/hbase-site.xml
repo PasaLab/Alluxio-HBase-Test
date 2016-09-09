@@ -39,20 +39,20 @@
   <name>hbase.cluster.distributed</name>
   <value>true</value>
   </property>
-<!--下面的设置都是在集成测试时使用的，前面两个测试不需要，主要是因为集群规模太小进行的妥协-->
- <property>
+<!--下面的设置都是在集成测试时使用的-->
+ <property><!--设置scan的缓存，出现ScanTimeout异常时可以使用-->
   <name>hbase.client.scanner.caching</name>
   <value>1024</value>
  </property>
- <property>
+ <property><!--出现ScanTimeout时可以使用-->
   <name>hbase.client.scanner.timeout.period</name>
   <value>600000</value>
  </property>
-<property>
+<property><!--出现Timeout时可以使用-->
     <name>hbase.rpc.timeout</name>
     <value>600000</value>
  </property>
-<property>
+<property><!--出现client Timeout或RegionTooBusy时可以使用-->
    <name>hbase.client.ipc.pool.type</name>
    <value>RoundRobinPool</value>
 </property>
@@ -81,7 +81,7 @@
  <name>hbase.coprocessor.master.classes</name>
  <value>org.apache.hadoop.hbase.security.visibility.VisibilityController,org.apache.hadoop.hbase.security.access.AccessController</value>
 </property>
-<property>
+<property><!--测试ACL的配置-->
  <name>hbase.security.access.early_out</name>
  <value>false</value>
 </property>

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 执行该脚本中的所有命令, 需要先到HBase源码工程的根目录下执行mvn test-compile！！！将测试代码编译为Java class文件
 
-# 该测试命令执行时间约为20min,设置compact type为Stripe Compact后不停进行表数据的读写
+# 该测试命令执行时间约为20min
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestIngestStripeCompactions
 
 # 该测试命令可以设置测试时间
@@ -45,3 +45,10 @@ ${HBASE_HOME}/bin/hbase -Dhbase.IntegrationTestIngest.runtime=600000 org.apache.
 
 # 该测试可以设置时间
 ${HBASE_HOME}/bin/hbase -Dhbase.IntegrationTestIngest.runtime=600000 org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestIngestWithVisibilityLabels
+
+# 该测试需要节点上有mapreduce, 参数为<num mappers> <num nodes per map> <tmp output dir>
+hbase-1.2.2/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedList Generator 10 10 /tmp/ITBLL2
+
+# 该测试需要节点上有mapreduce, 参数为<output dir> <num reducers>
+hbase-1.2.2/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedList verify /tmp/ITBLL3 2
+
