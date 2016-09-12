@@ -21,17 +21,17 @@ This is a repo for HBase on Alluxio Integration Test
   
   requisites:
   
-  **1. export ${HBASE_HOME}or replace ${HBASE_HOME}with the actual HBase root directory:**
+      **1. export ${HBASE_HOME}or replace ${HBASE_HOME}with the actual HBase root directory:**
   
-  **2. prepare a tsv file or csv file as input and replace the input path with the actual tsv file path**
+      **2. prepare a tsv file or csv file as input and replace the input path with the actual tsv file path**
   
 ##### 3.The third part is HBase Integration Test, the test commands is in `bin/integration_test.sh`:
 
   requisites:
   
-  **1. go to the root directory of HBase source code and run *mvn-compile* to compile the HBase test code**
+      **1. go to the root directory of HBase source code and run *mvn-compile* to compile the HBase test code**
   
-  **2. export ${HBASE_HOME}or replace ${HBASE_HOME}with the actual HBase root directory:**
+      **2. export ${HBASE_HOME}or replace ${HBASE_HOME}with the actual HBase root directory:**
 
   running test IntegrationTestIngestWithACL needs the following configuration item in `hbase-site.xml`：
   ```xml
