@@ -11,13 +11,13 @@ This is a repo for HBase on Alluxio Integration Test
 #### 2、 Copy this project to a node in the cluster(make sure this node can act as a client of HBase and Hadoop)
 
 ##### The tests are divided into three parts:
-###### 1.The first part is unit test(mostly from HBase Client UnitTest):
+##### 1.The first part is unit test(mostly from HBase Client UnitTest):
   
   How to run it：
   
      go to the project base directory and run a maven command： `mvn test`
 
-###### 2.The second part is Hadoop Utility test, the test commands is in `bin/hadoop_utility_test.sh`:
+##### 2.The second part is Hadoop Utility test, the test commands is in `bin/hadoop_utility_test.sh`:
   
   requisites:
   
@@ -25,7 +25,7 @@ This is a repo for HBase on Alluxio Integration Test
   
   **2. prepare a tsv file or csv file as input and replace the input path with the actual tsv file path**
   
-###### 3.The third part is HBase Integration Test, the test commands is in `bin/integration_test.sh`:
+##### 3.The third part is HBase Integration Test, the test commands is in `bin/integration_test.sh`:
 
   requisites:
   
