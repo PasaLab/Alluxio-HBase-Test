@@ -1,35 +1,39 @@
 # Alluxio-HBase-Test
 This is a repo for HBase on Alluxio Integration Test
 
-#### 1、在集群中安装以下软件：
+#### 1. Install the following softwares in your cluster：
 + Hadoop2.7.1
 + Alluxio1.2.0(build with Hadoop2.7.1)
-+ HBase1.2.2(build with Hadoop2.7.1)(可以独立安装一个zookeeper ensemble供HBase使用)
++ HBase1.2.2(build with Hadoop2.7.1)(you can install a zookeeper ensemble independently for HBase)
 
-(以上软件的配置项可以参考conf目录下的配置文件)
+(Configuration items can refer to the `conf` directory in this project)
 
-#### 2、然后将本工程拷到其中任何一个节点上(该节点可以作为HBase和Hadoop的Client即可)
+#### 2、 Copy this project to a node in the cluster(make sure this node can act as a client of HBase and Hadoop)
 
-##### 该测试分为3个部分:
-###### 1.第一部分为单元测试,使用junit编写(参考HBase Client UnitTest):
+##### The tests are divided into three parts:
+###### 1.The first part is unit test(mostly from HBase Client UnitTest):
   
-  运行方式为：
+  How to run it：
   
-     到项目根目录下运行：mvn test
+     go to the project base directory and run a maven command： `mvn test`
 
-###### 2.第二部分为Hadoop Utility测试, 测试命令在bin/hadoop_utility_test.sh中,
+###### 2.The second part is Hadoop Utility test, the test commands is in `bin/hadoop_utility_test.sh`:
   
-  **需要export ${HBASE_HOME}或者将${HBASE_HOME}替换为实际的HBase根目录**
+  requisites:
   
-  **需要准备tsv或csv文件作为输入并把脚本中所有文件路径替换为实际的路径**
+  **1. export ${HBASE_HOME}or replace ${HBASE_HOME}with the actual HBase root directory:**
   
-###### 3.第三部分为HBase的Integration Test, 测试命令在bin/integration_test.sh中,
+  **2. prepare a tsv file or csv file as input and replace the input path with the actual tsv file path**
   
-  **需要先在Base源码根目录下运行*mvn-compile*将HBase测试代码编译**
-  
-  **需要export ${HBASE_HOME}或者将${HBASE_HOME}替换为实际的HBase根目录**
+###### 3.The third part is HBase Integration Test, the test commands is in `bin/integration_test.sh`:
 
-  测试IntegrationTestIngestWithACL需要在hbase-site.xml中配置：
+  requisites:
+  
+  **1. go to the root directory of HBase source code and run *mvn-compile* to compile the HBase test code**
+  
+  **2. export ${HBASE_HOME}or replace ${HBASE_HOME}with the actual HBase root directory:**
+
+  running test IntegrationTestIngestWithACL needs the following configuration item in `hbase-site.xml`：
   ```xml
   <property>
    <name>hbase.coprocessor.region.classes</name>
@@ -44,7 +48,7 @@ This is a repo for HBase on Alluxio Integration Test
    <value>false</value>
   </property>
   ```
-  测试IntegrationTestIngestWithVisibilityLabels需要在hbase-site.xml中配置：
+  running test IntegrationTestIngestWithVisibilityLabels needs the following configuration item in `hbase-site.xml`：
   ```xml
   <property>
    <name>hbase.coprocessor.region.classes</name>
@@ -55,24 +59,24 @@ This is a repo for HBase on Alluxio Integration Test
    <value>org.apache.hadoop.hbase.security.visibility.VisibilityController</value>
   </property>
   ```
-  可以同时配置，以逗号分隔，具体见[conf/hbase_conf/hbase-site.xml](./conf/hbase_conf/hbase-site.xml)
+  The above 2 configuration items can be set in the same item, just separate the value with a comma， see [conf/hbase_conf/hbase-site.xml](./conf/hbase_conf/hbase-site.xml)
   
-  如果有Integration Test的测试出现异常(HBase未报错，Alluxio的日志中有hbase checksum failed),可以在hbase-site.xml中添加如下配置:
+  if any integration test throws an expection and you can see 'hbase checksum failed, using HDFS checksum' in Alluxio logs(but nothing abnormal in HBase logs), you can add a configuration in `hbase-site.xml`:
   ```xml
   <property>
    <name>hbase.regionserver.checksum.verify</name>
    <value>false</value>
   </property>
   ```
-目前没有通过的HBase Integration Test，并且需要研究的如下:
+There is a integration test failed and needs to be digged:
 ```bash
-${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.trace.IntegrationTestSendTraceRequests(出现OutOfOrderScannerNextException,在HBase-on-HDFS可以，正在研究)
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.trace.IntegrationTestSendTraceRequests(OutOfOrderScannerNextException appears, this test can pass in HBase-on-HDFS, still working on it):
 ```
-其余没通过的HBase Integration Test， 无需测试的原因写在后面了：
+Other integration tests which fail but don't need futher work are listed below:
 ```
-${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.IntegrationTestBulkLoad(这个测试代码有bug, https://issues.apache.org/jira/browse/HBASE-16558)
-${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestRegionReplicaReplication(出现和HBase-on-HDFS一样的错误，测试代码问题)
-${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestMetaReplicas(和HBase-on-HDFS一样报zookeeper connection refused)
-${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedListWithVisibility Loop 1 10 10 /tmp/aas 2 -u huangzhi(和HBase-on-HDFS一样的报错， Verify失败)
-${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestMTTR(因为是测试的是集群从宕机到恢复的时间，一直在读写表，跑)
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.IntegrationTestBulkLoad(test code bug, see [https://issues.apache.org/jira/browse/HBASE-16558](https://issues.apache.org/jira/browse/HBASE-16558))
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestRegionReplicaReplication(same error in HBase-on-HDFS)
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestMetaReplicas(same error inHBase-on-HDFS: zookeeper connection refused)
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedListWithVisibility Loop 1 10 10 /tmp/aas 2 -u huangzhi(same error in HBase-on-HDFS: Verify failed)
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestMTTR(destroy test, need about 2 days in a 4-node HBase cluster(48G mem, 3TB HDD))
 ```

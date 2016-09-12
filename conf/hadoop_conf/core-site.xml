@@ -3,8 +3,8 @@
 
 <configuration>
      <property>
-      <name>fs.default.name</name>
-      <value>hdfs://sr164:9000/</value>
+      <name>fs.defaultFS</name>
+      <value>hdfs://sr164</value>
      </property>
      <property>
       <name>hadoop.tmp.dir</name>

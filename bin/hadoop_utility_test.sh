@@ -1,18 +1,30 @@
 #!/usr/bin/env bash
-#该命令中-Dimporttsv.separator表示每行单词分隔符(tsv为\t, csv为,), test-table表示表名, hdfs://sr164:9000/tsv-files为输入文件的路径(可以是文件夹)
+# -Dimporttsv.columns=HBASE_ROW_KEY,a:a1,a:a2,b:b1 is for a csv file which line is like './wikipedia/commons/e/e4/A.JPG,a,59527,1',
+# './wikipedia/commons/e/e4/A.JPG' is HBASE_ROW_KEY,
+# 'a' for a:a1,
+# '59527' for a:a2,
+# '1' for b:b1
+# -Dimporttsv.separator means the separator in a file line,
+# 'test-table' means table name,
+# 'hdfs://sr164:9000/tsv-files' means the input path,
+# !! before running this command, you should use hbase shell create the table:
+# !! create 'test', 'a', 'b'
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,a:a1,a:a2,b:b1 -Dimporttsv.separator=, test-table hdfs://sr164:9000/tsv-files
 
-#该命令中test-table为Export的表名, hdfs://sr164:9000/testexport表示Export的文件名
+# 'test-table' means table name,
+# 'hdfs://sr164:9000/tsv-files' means the Export path,
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.Export test-table hdfs://sr164:9000/testexport
 
-#该命令中test-table为Import的表名, hdfs://sr164:9000/testexport表示Import的文件名
+# 'test-table' means table name,
+# 'hdfs://sr164:9000/tsv-files' means the Import path,
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.Import test-table2 hdfs://sr164:9000/testexport
 
-#该命令中alluxio://sr164:19998/hbase/WALs可以不用修改, 表示播放该目录下所有WAL, test-table为需要播放的表名
+# 'alluxio://sr164:19998/hbase/WALs' is ok for all the WAL play,
+# 'test-table' means table name,
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.WALPlayer alluxio://sr164:19998/hbase/WALs test-table
 
-#该命令中test-table表示需要进行统计行数的表名
+# 'test-table' means table name,
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.RowCounter test-table
 
-#该命令中test-table表示需要进行cell统计的表名
+# 'test-table' means table name,
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.CellCounter test-table

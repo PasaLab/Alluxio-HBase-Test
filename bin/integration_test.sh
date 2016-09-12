@@ -1,54 +1,54 @@
 #!/usr/bin/env bash
-# 执行该脚本中的所有命令, 需要先到HBase源码工程的根目录下执行mvn test-compile！！！将测试代码编译为Java class文件
+# before running any of the commands in this file, go to HBase source root directory and run 'mvn test-compile' to compile the test source code of HBase
 
-# 该测试命令执行时间约为20min
+# test ingest data when runing in the stripe compact type, costs 20min:
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestIngestStripeCompactions
 
-# 该测试命令可以设置测试时间
+# can set test running time
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestDDLMasterFailover -Dhbase.IntegrationTestDDLMasterFailover.runtime=240000 -Dhbase.IntegrationTestDDLMasterFailover.numThreads=4 -Dhbase.IntegrationTestDDLMasterFailover.numRegions=10
 
-# 该测试命令可以设置时间
+# can set test running time
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestIngest -Dhbase.IntegrationTestIngest.runtime=600000
 
-# loadmapper.num_to_write可以设置
+# can set loadmapper.num_to_write
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestLoadAndVerify -Dloadmapper.num_to_write=10000 loadAndVerify
 
-# 该测试约为20min
+# costs about 20min
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestTimeBoundedRequestsWithRegionReplicas
 
-# 该测试约为20min
+# costs about 20min
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestTimeBoundedMultiGetRequestsWithRegionReplicas
 
-# 该测试需要节点上有mapreduce,约为1min
+# costs about 1min, need mapreduce:
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.IntegrationTestImportTsv
 
-# 该测试需要大约1min
+# costs about 1min
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestAcidGuarantees
 
-# 该测试可以设置时间
+# can set test running time
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestIngestWithTags -Dhbase.IntegrationTestIngest.runtime=600000
 
-# 该测试约为1min
+# can set test running time
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestManyRegions
 
-# 该测试需要节点上有mapreduce, 约为3min
+# costs about 3min, need mapreduce:
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestReplication
 
-# 该测试约为6min
+# costs about 6min
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestRpcClient
 
-# 该测试约为2min
+# costs about 2min
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestLazyCfLoading
 
-# 该测试可以设置时间
+# can set test running time
 ${HBASE_HOME}/bin/hbase -Dhbase.IntegrationTestIngest.runtime=600000 org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestIngestWithACL
 
-# 该测试可以设置时间
+# can set test running time
 ${HBASE_HOME}/bin/hbase -Dhbase.IntegrationTestIngest.runtime=600000 org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestIngestWithVisibilityLabels
 
-# 该测试需要节点上有mapreduce, 参数为<num mappers> <num nodes per map> <tmp output dir>
+# the arguments are <num mappers> <num nodes per map> <tmp output dir>, need mapreduce:
 hbase-1.2.2/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedList Generator 10 10 /tmp/ITBLL2
 
-# 该测试需要节点上有mapreduce, 参数为<output dir> <num reducers>
+# the arguments are <output dir> <num reducers>, need mapreduce:
 hbase-1.2.2/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedList verify /tmp/ITBLL3 2
 

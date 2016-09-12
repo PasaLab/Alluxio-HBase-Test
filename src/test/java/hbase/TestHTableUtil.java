@@ -19,7 +19,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class TestHTableUtil {
-  final Log LOG = LogFactory.getLog(getClass());
   private final static HBaseUtility util = new HBaseUtility();
   private static byte [] FAMILY = Bytes.toBytes("testFamily");
   private static byte [] QUALIFIER = Bytes.toBytes("testQualifier");
@@ -52,7 +51,7 @@ public class TestHTableUtil {
     for(Result result : ht.getScanner(scan)) {
       count++;
     }
-    LOG.info("bucket put count=" + count);
+    System.out.println("bucket put count=" + count);
     assertEquals(count, puts.size());
     ht.close();
    }
@@ -83,7 +82,7 @@ public class TestHTableUtil {
    for(Result result : ht.getScanner(scan)) {
      count++;
    }
-   LOG.info("bucket batch count=" + count);
+   System.out.println("bucket batch count=" + count);
    assertEquals(count, rows.size());
    ht.close();
  }
