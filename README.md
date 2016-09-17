@@ -76,7 +76,8 @@ Other integration tests which fail but don't need futher work are listed below:
 ```
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.mapreduce.IntegrationTestBulkLoad(test code bug, see [https://issues.apache.org/jira/browse/HBASE-16558](https://issues.apache.org/jira/browse/HBASE-16558))
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestRegionReplicaReplication(same error in HBase-on-HDFS)
-${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestMetaReplicas(same error inHBase-on-HDFS: zookeeper connection refused)
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestMetaReplicas(same error in HBase-on-HDFS: zookeeper connection refused)
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedListWithVisibility Loop 1 10 10 /tmp/aas 2 -u huangzhi(same error in HBase-on-HDFS: Verify failed)
+${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestRpcClient(same warning in HBase-on-HDFS)
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestMTTR(destroy test, need about 2 days in a 4-node HBase cluster(48G mem, 3TB HDD))
 ```
