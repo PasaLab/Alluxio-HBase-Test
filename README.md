@@ -81,3 +81,5 @@ ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.test.IntegrationTestBigLinkedLis
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestRpcClient(same warning in HBase-on-HDFS)
 ${HBASE_HOME}/bin/hbase org.apache.hadoop.hbase.IntegrationTestsDriver -r .*\\.IntegrationTestMTTR(destroy test, need about 2 days in a 4-node HBase cluster(48G mem, 3TB HDD))
 ```
+
+I have added Performance Test script in bin/perf.sh. The way to use it is like bin/integration_test.sh.
